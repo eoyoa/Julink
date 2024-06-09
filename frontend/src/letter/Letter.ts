@@ -17,7 +17,11 @@ export class Letter {
     increase(amount: number) {
         const currentCharCode = this._letter.charCodeAt(0);
 
-        return new Letter(String.fromCharCode(this.getResultingCharCode(currentCharCode, amount)));
+        return new Letter(String.fromCharCode(this.getResultingCharCode(currentCharCode + amount)));
+    }
+
+    decrease(amount: number) {
+        return this.increase(-amount);
     }
 
     // helper methods
@@ -28,10 +32,12 @@ export class Letter {
         return (letterCharCode >= 'a'.charCodeAt(0)) && (letterCharCode <= 'z'.charCodeAt(0));
     }
 
-    private getResultingCharCode(currentCharCode: number, amount: number): number {
+    private getResultingCharCode(unwrappedCode: number): number {
+        const properMod = (n: number, m: number) => ((n % m) + m) % m;
+
         const charCodeA = 'a'.charCodeAt(0);
-        const shiftedCharCode = (currentCharCode + amount) - charCodeA;
-        const codeInAlphabet = shiftedCharCode % this.ENGLISH_ALPHABET_LENGTH;
+        const shiftedCharCode = (unwrappedCode) - charCodeA;
+        const codeInAlphabet = Math.abs(properMod(shiftedCharCode, this.ENGLISH_ALPHABET_LENGTH));
 
         return codeInAlphabet + charCodeA;
     }

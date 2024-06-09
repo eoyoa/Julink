@@ -10,7 +10,7 @@ describe('Letter.increase() tests', () => {
 
         expect(letterA.increase(amount)).toStrictEqual(new Letter(expectedLetter));
     })
-    describe('rollover tests', () => {
+    describe('wrapping tests', () => {
         test.each([
             ['Z', 1, 'A'],
             ['Y', 2, 'A'],
@@ -19,6 +19,29 @@ describe('Letter.increase() tests', () => {
             const letterA = new Letter(letter);
 
             expect(letterA.increase(amount)).toStrictEqual(new Letter(expectedLetter));
+        })
+    })
+});
+
+describe('Letter.decrease() tests', () => {
+    test.each([
+        ['B', 1, 'A'],
+        ['C', 1, 'B'],
+        ['C', 2, 'A']
+    ])('decreasing %s by %i becomes %s', (letter, amount, expectedLetter) => {
+        const letterA = new Letter(letter);
+
+        expect(letterA.decrease(amount)).toStrictEqual(new Letter(expectedLetter));
+    })
+    describe('wrapping tests', () => {
+        test.each([
+            ['A', 1, 'Z'],
+            ['A', 2, 'Y'],
+            ['B', 2, 'Z'],
+        ])('decreasing %s by %i becomes %s', (letter, amount, expectedLetter) => {
+            const letterA = new Letter(letter);
+
+            expect(letterA.decrease(amount)).toStrictEqual(new Letter(expectedLetter));
         })
     })
 });

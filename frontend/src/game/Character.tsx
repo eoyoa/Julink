@@ -12,7 +12,6 @@ export default function Character(props: CharacterProps) {
         <Button
             variant="outlined"
             sx={{
-                display: 'inline-flex',
                 padding: 1,
                 minWidth: 0, // to make single letters
                 fontFamily: 'inconsolata'

@@ -2,12 +2,9 @@ export type GameState = {
     characters: string[]
 }
 
-export type IncrementAction = {
-    type: 'increment',
-    charIndex: number
-}
-export type DecrementAction = {
-    type: 'decrement',
+export type ClickAction = {
+    type: 'click',
+    clickButton: ClickButton,
     charIndex: number
 }
 
@@ -16,26 +13,15 @@ enum ClickButton {
     RIGHT = 2
 }
 
-export type GameAction = IncrementAction | DecrementAction
+export type GameAction = ClickAction
 
 export default function GameReducer(state: GameState, action: GameAction): GameState {
     switch (action.type) {
-        case 'increment': {
+        case 'click': {
             const i = action.charIndex;
             console.debug(`received click from ${i}`);
 
-            const newChars = getIncrementChars(state.characters, action.charIndex);
-
-            return {
-                ...state,
-                characters: newChars
-            };
-        }
-        case 'decrement': {
-            const i = action.charIndex;
-            console.debug(`received click from ${i}`);
-
-            const newChars = getDecrementChars(state.characters, action.charIndex);
+            const newChars = getClickedChars(state.characters, action.charIndex, action.clickButton);
 
             return {
                 ...state,
@@ -43,16 +29,6 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
             };
         }
     }
-}
-
-// TODO: move all below to backend
-
-function getIncrementChars(characters: string[], charIndex: number) {
-    return getClickedChars(characters, charIndex, ClickButton.LEFT);
-}
-
-function getDecrementChars(characters: string[], charIndex: number) {
-    return getClickedChars(characters, charIndex, ClickButton.RIGHT);
 }
 
 function getClickedChars(characters: string[], charIndex: number, clickButton: ClickButton) {

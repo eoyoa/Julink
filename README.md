@@ -5,7 +5,6 @@ A word game where your actions have consequences.
 ## TODO
 
 - [ ] Make hard mode
-  - [ ] Add goal word to game
   - [ ] Abstract out game portion to different subcomponent of game
   - [ ] Verify word through reducer
 - [ ] Make normal mode
@@ -19,5 +18,7 @@ A word game where your actions have consequences.
       - This could be fixed by just making the left/right letters mutate the other end.
     - Or, if all are right, then there's no wrong letter to point to.
       - A solution could be to just let the user know that they're all right, then set them as immutable.
+        - This shouldn't be done in hard mode: makes the game too easy.
+        - Instead, we could remove the goal word and also just highlight found right answers as green.
       - Then, the wrapping mutation fix mentioned above would have to either be changed or not done.
 - [ ] Add project dependencies and local development information to `README.md`

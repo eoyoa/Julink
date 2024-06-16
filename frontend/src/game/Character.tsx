@@ -1,6 +1,6 @@
 import {Button, Grid} from "@mui/material";
 import React, {useCallback} from "react";
-import {CharacterState, GameAction} from "./gameReducer.ts";
+import {CharacterState, GameAction} from "./reducer/gameReducer.ts";
 
 export type CharacterProps = {
     ch: CharacterState,

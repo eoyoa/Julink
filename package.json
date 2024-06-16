@@ -1,6 +1,8 @@
 {
   "scripts": {
     "frontend:build": "pnpm --filter=frontend build",
-    "build": "pnpm frontend:build"
+    "frontend:dev": "pnpm --filter=frontend dev",
+    "build": "pnpm frontend:build",
+    "dev": "pnpm frontend:dev"
   }
 }

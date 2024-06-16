@@ -12,12 +12,14 @@ export default function HintStack(props: HintStackProps) {
                 direction='column'
                 alignItems='center'
             >
-                {props.hints.map((hint, hintI) => (
-                    <Stack key={hintI} alignItems='center' direction='row' spacing={1} justifyContent='center'>
-                        <Typography>{hint.isRight ? 'O' : 'X'}</Typography>
-                        <Typography>{hint.char}</Typography>
-                    </Stack>
-                ))}
+                {props.hints.map((hint, hintI) => {
+                    return (
+                        <Stack key={hintI} alignItems='center' direction='row' spacing={1} justifyContent='center'>
+                            <Typography>{hint.type}</Typography>
+                            <Typography>{hint.char}</Typography>
+                        </Stack>
+                    );
+                })}
             </Stack>
         </Grid>
     );

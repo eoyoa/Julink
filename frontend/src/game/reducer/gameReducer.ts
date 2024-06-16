@@ -11,7 +11,14 @@ export type CharacterState = {
 
 export type Hint = {
     char: string,
-    isRight: boolean
+    type: HintType
+}
+
+export enum HintType {
+    RIGHT = 'O',
+    WRONG = 'X',
+    MAYBE = '?',
+    UNKNOWN = '-'
 }
 
 export type ClickAction = {
@@ -117,25 +124,71 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
     newCharStates[charIndex].canGenerateHints = false;
     const toGenerate = validIndices.filter(i => !charIsCorrect(newCharStates[i].char, i));
 
+    // TODO: this entire section could be done better. use map to avoid array assignment.
     if (toGenerate.length === 0) {
         // every letter is right.
         // reveal to the player that all are right.
-        for (const i of validIndices) {
+        for (let i = 0; i < charStates.length; i++) {
+            const currChar = newCharStates[i];
+            if (validIndices.includes(i)) {
+                // TODO: don't use assignment
+                newCharStates[i] = {
+                    ...currChar,
+                    hints: currChar.hints.concat({
+                        char: currChar.char,
+                        type: HintType.RIGHT
+                    })
+                }
+                continue;
+            }
             // TODO: don't use assignment
-            newCharStates[i].hints = newCharStates[i].hints.concat({
-                char: newCharStates[i].char,
-                isRight: true,
-            });
+            newCharStates[i] = {
+                ...currChar,
+                hints: currChar.hints.concat({
+                    char: '-',
+                    type: HintType.UNKNOWN
+                })
+            }
         }
     } else {
         // at least one letter is wrong.
         // reveal to the player a random wrong letter.
         const indexToHint = toGenerate[Math.floor(Math.random() * toGenerate.length)];
-        // TODO: don't use assignment
-        newCharStates[indexToHint].hints = newCharStates[indexToHint].hints.concat({
-            char: newCharStates[indexToHint].char,
-            isRight: false,
-        });
+
+        for (let i = 0; i < charStates.length; i++) {
+            const currChar = newCharStates[i];
+            if (i === indexToHint) {
+                // TODO: don't use assignment
+                newCharStates[i] = {
+                    ...currChar,
+                    hints: currChar.hints.concat({
+                        char: currChar.char,
+                        type: HintType.WRONG
+                    })
+                }
+                continue;
+            }
+            if (validIndices.includes(i)) {
+                // TODO: don't use assignment
+                newCharStates[i] = {
+                    ...currChar,
+                    hints: currChar.hints.concat({
+                        char: currChar.char,
+                        type: HintType.MAYBE
+                    })
+                }
+                continue;
+            }
+            // TODO: don't use assignment
+            newCharStates[i] = {
+                ...currChar,
+                hints: currChar.hints.concat({
+                    char: '-',
+                    type: HintType.UNKNOWN
+                })
+            }
+        }
+
     }
 
     return newCharStates;

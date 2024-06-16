@@ -1,6 +1,7 @@
 export type GameState = {
     characters: CharacterState[],
-    foundWord: boolean
+    foundWord: boolean,
+    clicks: number
 }
 
 export type CharacterState = {
@@ -46,6 +47,7 @@ export function createInitialState(initialWord: string): GameState {
             }
         }),
         foundWord: false,
+        clicks: 0
     }
 }
 
@@ -65,6 +67,7 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
                 characters: changedChars,
                 foundWord: changedChars.reduce((prev, curr, currI) =>
                     charIsCorrect(curr.char, currI) && prev, true),
+                clicks: state.clicks + 1
             };
             if (newState.foundWord) console.debug('finished!');
             return newState;

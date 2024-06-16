@@ -1,4 +1,4 @@
-import {Button, Stack} from "@mui/material";
+import {Box, Button, Grid, Stack} from "@mui/material";
 import {useCallback, useReducer} from "react";
 import GameReducer, {GameState} from "./gameReducer.ts";
 import './CharacterFont.css';
@@ -8,7 +8,8 @@ function createInitialState(initialWord: string): GameState {
         characters: initialWord.split('').map(ch => {
             return {
                 char: ch,
-                isCorrect: false // TODO: fix
+                isCorrect: false, // TODO: shouldn't initialize to false (shouldn't exist in the first place)
+                hints: []
             }
         }),
     }
@@ -36,18 +37,50 @@ export default function Game() {
     }, [])
 
     return (
-        <Stack direction='row' spacing={1}>
+        // <Stack direction='row' spacing={1}>
+        //     {gameState.characters.map((ch, index) =>
+        //         <Button
+        //             key={index}
+        //             variant={ch.isCorrect ? 'contained' : 'outlined'}
+        //             sx={buttonStyles}
+        //             onClick={event => handleClick(event, index)}
+        //             onContextMenu={event => handleClick(event, index)}
+        //             color={ch.isCorrect ? 'success' : 'primary'}
+        //         >
+        //             {ch.char}
+        //         </Button>)}
+        // </Stack>
+        <Grid
+            container
+            spacing={2}
+            columns={6}
+        >
             {gameState.characters.map((ch, index) =>
-                <Button
-                    key={index}
-                    variant={ch.isCorrect ? 'contained' : 'outlined'}
-                    sx={buttonStyles}
-                    onClick={event => handleClick(event, index)}
-                    onContextMenu={event => handleClick(event, index)}
-                    color={ch.isCorrect ? 'success' : 'primary'}
-                >
-                    {ch.char}
-                </Button>)}
-        </Stack>
+                (<Grid item xs={1} key={index}>
+                    <Button
+                        variant={ch.isCorrect ? 'contained' : 'outlined'}
+                        sx={buttonStyles}
+                        onClick={event => handleClick(event, index)}
+                        onContextMenu={event => handleClick(event, index)}
+                        color={ch.isCorrect ? 'success' : 'primary'}
+                    >
+                        {ch.char}
+                    </Button>
+                </Grid>))
+            }
+            {gameState.characters.map((ch, charI) => (
+                <Grid item xs={1} key={charI}>
+                    <Stack
+                        direction='column'
+                    >
+                        {ch.hints.map((hint, hintI) => (
+                            <Box key={hintI}>
+                                {hint}
+                            </Box>
+                        ))}
+                    </Stack>
+                </Grid>
+            ))}
+        </Grid>
     );
 }

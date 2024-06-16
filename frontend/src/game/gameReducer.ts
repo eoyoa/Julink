@@ -4,7 +4,8 @@ export type GameState = {
 
 type Character = {
     char: string,
-    isCorrect: boolean
+    isCorrect: boolean, // TODO: shouldn't exist! make the backend reveal hints when correct
+    hints: string[]
 }
 
 export type ClickAction = {
@@ -33,7 +34,8 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
             const validatedChars: Character[] = changedChars.map((ch, i) => {
                 return {
                     char: ch,
-                    isCorrect: ch === correctWord.charAt(i)
+                    isCorrect: ch === correctWord.charAt(i),
+                    hints: correctWord.substring(0, i).split('') // TODO: replace with actual hints
                 }
             })
 
@@ -57,6 +59,8 @@ function getClickedChars(characters: string[], charIndex: number, clickButton: C
             }
         }
     })();
+
+    // TODO: add monty hall logic here
     newChars[charIndex] = changeFunction(newChars[charIndex]);
     if (charIndex > 0) {
         const prevIndex = charIndex - 1;

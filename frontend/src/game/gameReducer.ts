@@ -1,5 +1,10 @@
 export type GameState = {
-    characters: string[]
+    characters: Character[]
+}
+
+type Character = {
+    char: string,
+    isCorrect: boolean
 }
 
 export type ClickAction = {
@@ -15,17 +20,26 @@ enum ClickButton {
 
 export type GameAction = ClickAction
 
+// TODO: move to backend
+const correctWord = 'LETTER';
+
 export default function GameReducer(state: GameState, action: GameAction): GameState {
     switch (action.type) {
         case 'click': {
             const i = action.charIndex;
             console.debug(`received click from ${i}`);
 
-            const newChars = getClickedChars(state.characters, action.charIndex, action.clickButton);
+            const changedChars = getClickedChars(state.characters.map((ch) => ch.char), action.charIndex, action.clickButton);
+            const validatedChars: Character[] = changedChars.map((ch, i) => {
+                return {
+                    char: ch,
+                    isCorrect: ch === correctWord.charAt(i)
+                }
+            })
 
             return {
                 ...state,
-                characters: newChars
+                characters: validatedChars
             };
         }
     }

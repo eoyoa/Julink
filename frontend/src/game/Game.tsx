@@ -5,7 +5,12 @@ import './CharacterFont.css';
 
 function createInitialState(initialWord: string): GameState {
     return {
-        characters: initialWord.split(''),
+        characters: initialWord.split('').map(ch => {
+            return {
+                char: ch,
+                isCorrect: false // TODO: fix
+            }
+        }),
     }
 }
 
@@ -32,15 +37,16 @@ export default function Game() {
 
     return (
         <Stack direction='row' spacing={1}>
-            {gameState.characters.map((character, index) =>
+            {gameState.characters.map((ch, index) =>
                 <Button
                     key={index}
-                    variant="outlined"
+                    variant={ch.isCorrect ? 'contained' : 'outlined'}
                     sx={buttonStyles}
                     onClick={event => handleClick(event, index)}
                     onContextMenu={event => handleClick(event, index)}
+                    color={ch.isCorrect ? 'success' : 'primary'}
                 >
-                    {character}
+                    {ch.char}
                 </Button>)}
         </Stack>
     );

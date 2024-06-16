@@ -2,6 +2,21 @@
 
 A word game where your actions have consequences.
 
+## Dependencies
+
+### Frontend
+
+- Typescript
+- React
+- Vite
+- Material UI
+
+#### Testing
+
+- Vitest
+- Testing Library
+- jsdom
+
 ## TODO
 
 - [ ] Make hard mode
@@ -21,4 +36,3 @@ A word game where your actions have consequences.
         - This shouldn't be done in hard mode: makes the game too easy.
         - Instead, we could remove the goal word and also just highlight found right answers as green.
       - Then, the wrapping mutation fix mentioned above would have to either be changed or not done.
-- [ ] Add project dependencies and local development information to `README.md`

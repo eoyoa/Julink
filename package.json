@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "frontend:build": "pnpm --filter=frontend build",
+    "build": "pnpm frontend:build"
+  }
+}

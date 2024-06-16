@@ -1,8 +1,8 @@
 export type GameState = {
-    characters: Character[]
+    characters: CharacterState[]
 }
 
-type Character = {
+export type CharacterState = {
     char: string,
     isCorrect: boolean, // TODO: shouldn't exist! make the backend reveal hints when correct
     hints: string[]
@@ -21,6 +21,20 @@ enum ClickButton {
 
 export type GameAction = ClickAction
 
+export const startWord = 'JULINK';
+
+export function createInitialState(initialWord: string): GameState {
+    return {
+        characters: initialWord.split('').map(ch => {
+            return {
+                char: ch,
+                isCorrect: false, // TODO: shouldn't initialize to false (shouldn't exist in the first place)
+                hints: []
+            }
+        }),
+    }
+}
+
 // TODO: move to backend
 const correctWord = 'LETTER';
 
@@ -31,7 +45,7 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
             console.debug(`received click from ${i}`);
 
             const changedChars = getClickedChars(state.characters.map((ch) => ch.char), action.charIndex, action.clickButton);
-            const validatedChars: Character[] = changedChars.map((ch, i) => {
+            const validatedChars: CharacterState[] = changedChars.map((ch, i) => {
                 return {
                     char: ch,
                     isCorrect: ch === correctWord.charAt(i),
@@ -46,6 +60,8 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
         }
     }
 }
+
+// TODO: move logic elsewhere?
 
 function getClickedChars(characters: string[], charIndex: number, clickButton: ClickButton) {
     const newChars = [...characters];

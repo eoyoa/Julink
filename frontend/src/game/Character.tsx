@@ -1,23 +1,42 @@
-import {Button} from "@mui/material";
-import './CharacterFont.css';
-import React from "react";
+import {Button, Grid} from "@mui/material";
+import React, {useCallback} from "react";
+import {CharacterState, GameAction} from "./gameReducer.ts";
 
 export type CharacterProps = {
-    letter: string,
-    clickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+    ch: CharacterState,
+    index: number,
+    dispatch: React.Dispatch<GameAction>
+}
+
+const buttonStyles = {
+    padding: 1,
+    minWidth: 0, // to make single letters
+    fontFamily: 'inconsolata'
 }
 
 export default function Character(props: CharacterProps) {
+    const handleClick = useCallback((event: React.MouseEvent, index: number) => {
+        event.preventDefault();
+        console.debug('clicked!');
+        props.dispatch({
+            type: 'click',
+            clickButton: event.nativeEvent.button,
+            charIndex: index
+        })
+        // TODO: also send state to backend for verification, then await response
+    }, [])
+
     return (
-        <Button
-            variant="outlined"
-            sx={{
-                padding: 1,
-                minWidth: 0, // to make single letters
-                fontFamily: 'inconsolata'
-            }}
-        >
-            {props.letter}
-        </Button>
+        <Grid item xs={1}>
+            <Button
+                variant={props.ch.isCorrect ? 'contained' : 'outlined'}
+                sx={buttonStyles}
+                onClick={event => handleClick(event, props.index)}
+                onContextMenu={event => handleClick(event, props.index)}
+                color={props.ch.isCorrect ? 'success' : 'primary'}
+            >
+                {props.ch.char}
+            </Button>
+        </Grid>
     );
 }

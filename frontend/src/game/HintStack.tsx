@@ -4,7 +4,7 @@ export type HintStackProps = {
     hints: string[]
 }
 
-export function HintStack(props: HintStackProps) {
+export default function HintStack(props: HintStackProps) {
     return (
         <Grid item xs={1}>
             <Stack

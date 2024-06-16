@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import {useReducer} from "react";
 import GameReducer, {createInitialState, startWord} from "./gameReducer.ts";
-import {HintStack} from "./HintStack.tsx";
+import HintStack from "./HintStack.tsx";
 import Character from "./Character.tsx";
 
 export default function Game() {

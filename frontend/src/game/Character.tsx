@@ -24,7 +24,7 @@ export default function Character(props: CharacterProps) {
             charIndex: index
         })
         // TODO: also send state to backend for verification, then await response
-    }, [])
+    }, [props])
 
     return (
         <Grid item xs={1}>

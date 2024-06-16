@@ -19,11 +19,9 @@ A word game where your actions have consequences.
 
 ## TODO
 
-- [ ] Make hard mode
+- [X] Make hard mode
   - [ ] Abstract out game portion to different subcomponent of game
-  - [ ] Verify word through reducer
 - [ ] Make normal mode
-  - [ ] Hide goal word in normal mode
   - [ ] Add guess text field to normal mode
   - [ ] Add Monty Hall problem-like hints
     - Basically, if your action causes one of the 2-3 letters you mutated to become right, then inform the user of 1 wrong letter

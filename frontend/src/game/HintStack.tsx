@@ -10,6 +10,7 @@ export default function HintStack(props: HintStackProps) {
         <Grid item xs={1}>
             <Stack
                 direction='column'
+                alignItems='center'
             >
                 {props.hints.map((hint, hintI) => (
                     <Stack key={hintI} alignItems='center' direction='row' spacing={1} justifyContent='center'>

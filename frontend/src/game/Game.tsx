@@ -10,12 +10,12 @@ export default function Game() {
     return (
         <Grid
             container
-            spacing={2}
+            spacing={0}
             columns={6}
-            justifyContent='center'
         >
             {gameState.characters.map((ch, index) =>
-                <Character ch={ch} index={index} dispatch={dispatch} key={index}></Character>
+                <Character key={index} ch={ch} index={index} dispatch={dispatch}
+                           foundWord={gameState.foundWord}></Character>
             )}
             {gameState.characters.map((ch, charI) =>
                 <HintStack hints={ch.hints} key={charI}></HintStack>

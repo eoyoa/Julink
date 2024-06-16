@@ -1,5 +1,6 @@
 export type GameState = {
-    characters: CharacterState[]
+    characters: CharacterState[],
+    foundWord: boolean
 }
 
 export type CharacterState = {
@@ -37,6 +38,7 @@ export function createInitialState(initialWord: string): GameState {
                 canGenerateHints: true,
             }
         }),
+        foundWord: false,
     }
 }
 
@@ -51,10 +53,14 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
 
             const changedChars = getClickedChars(state.characters, action.charIndex, action.clickButton);
 
-            return {
+            const newState = {
                 ...state,
-                characters: changedChars
+                characters: changedChars,
+                foundWord: changedChars.reduce((prev, curr, currI) =>
+                    charIsCorrect(curr.char, currI) && prev, true),
             };
+            if (newState.foundWord) console.debug('finished!');
+            return newState;
         }
     }
 }

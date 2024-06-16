@@ -4,8 +4,13 @@ export type GameState = {
 
 export type CharacterState = {
     char: string,
-    isCorrect: boolean, // TODO: shouldn't exist! make the backend reveal hints when correct
-    hints: string[]
+    hints: Hint[],
+    canGenerateHints: boolean
+}
+
+export type Hint = {
+    char: string,
+    isRight: boolean
 }
 
 export type ClickAction = {
@@ -28,8 +33,8 @@ export function createInitialState(initialWord: string): GameState {
         characters: initialWord.split('').map(ch => {
             return {
                 char: ch,
-                isCorrect: false, // TODO: shouldn't initialize to false (shouldn't exist in the first place)
-                hints: []
+                hints: [],
+                canGenerateHints: true,
             }
         }),
     }
@@ -44,18 +49,11 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
             const i = action.charIndex;
             console.debug(`received click from ${i}`);
 
-            const changedChars = getClickedChars(state.characters.map((ch) => ch.char), action.charIndex, action.clickButton);
-            const validatedChars: CharacterState[] = changedChars.map((ch, i) => {
-                return {
-                    char: ch,
-                    isCorrect: ch === correctWord.charAt(i),
-                    hints: correctWord.substring(0, i).split('') // TODO: replace with actual hints
-                }
-            })
+            const changedChars = getClickedChars(state.characters, action.charIndex, action.clickButton);
 
             return {
                 ...state,
-                characters: validatedChars
+                characters: changedChars
             };
         }
     }
@@ -63,8 +61,12 @@ export default function GameReducer(state: GameState, action: GameAction): GameS
 
 // TODO: move logic elsewhere?
 
-function getClickedChars(characters: string[], charIndex: number, clickButton: ClickButton) {
-    const newChars = [...characters];
+function charIsCorrect(mutatedChar: string, charIndex: number) {
+    return mutatedChar === correctWord.charAt(charIndex);
+}
+
+function getClickedChars(charStates: CharacterState[], charIndex: number, clickButton: ClickButton) {
+    const newCharStates = [...charStates];
     const changeFunction = (() => {
         switch (clickButton) {
             case ClickButton.LEFT: {
@@ -76,17 +78,61 @@ function getClickedChars(characters: string[], charIndex: number, clickButton: C
         }
     })();
 
-    // TODO: add monty hall logic here
-    newChars[charIndex] = changeFunction(newChars[charIndex]);
-    if (charIndex > 0) {
-        const prevIndex = charIndex - 1;
-        newChars[prevIndex] = changeFunction(newChars[prevIndex]);
+    function changeState(charState: CharacterState) {
+        return {
+            ...charState,
+            char: changeFunction(charState.char)
+        }
     }
-    if (charIndex < newChars.length - 1) {
-        const nextIndex = charIndex + 1;
-        newChars[nextIndex] = changeFunction(newChars[nextIndex]);
+
+    const canGenerate = newCharStates[charIndex].canGenerateHints;
+    let shouldGenerate = false;
+
+    // get valid indices to mutate
+    let validIndices = [charIndex];
+    if (charIndex > 0) validIndices = validIndices.concat(charIndex - 1);
+    if (charIndex < charStates.length - 1) validIndices = validIndices.concat(charIndex + 1);
+
+    for (const i of validIndices) {
+        // TODO: https://react.dev/learn/updating-arrays-in-state don't use assignment
+        newCharStates[i] = changeState(charStates[i]);
+        if (!shouldGenerate && charIsCorrect(newCharStates[i].char, i)) {
+            shouldGenerate = true;
+        }
     }
-    return newChars;
+
+    if (!canGenerate || !shouldGenerate) {
+        if (shouldGenerate && !canGenerate) console.debug(`cannot generate new hints from ${charIndex}!`)
+        return newCharStates;
+    }
+
+    console.debug(`one of the ${validIndices.length} characters is right and we can generate hints from ${charIndex}.`);
+    console.debug('generating...');
+    newCharStates[charIndex].canGenerateHints = false;
+    const toGenerate = validIndices.filter(i => !charIsCorrect(newCharStates[i].char, i));
+
+    if (toGenerate.length === 0) {
+        // every letter is right.
+        // reveal to the player that all are right.
+        for (const i of validIndices) {
+            // TODO: don't use assignment
+            newCharStates[i].hints = newCharStates[i].hints.concat({
+                char: newCharStates[i].char,
+                isRight: true,
+            });
+        }
+    } else {
+        // at least one letter is wrong.
+        // reveal to the player a random wrong letter.
+        const indexToHint = toGenerate[Math.floor(Math.random() * toGenerate.length)];
+        // TODO: don't use assignment
+        newCharStates[indexToHint].hints = newCharStates[indexToHint].hints.concat({
+            char: newCharStates[indexToHint].char,
+            isRight: false,
+        });
+    }
+
+    return newCharStates;
 }
 
 function increment(letter: string) {

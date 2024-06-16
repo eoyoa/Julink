@@ -1,7 +1,8 @@
-import {Box, Grid, Stack} from "@mui/material";
+import {Grid, Stack, Typography} from "@mui/material";
+import {Hint} from "./reducer/gameReducer.ts";
 
 export type HintStackProps = {
-    hints: string[]
+    hints: Hint[]
 }
 
 export default function HintStack(props: HintStackProps) {
@@ -11,9 +12,10 @@ export default function HintStack(props: HintStackProps) {
                 direction='column'
             >
                 {props.hints.map((hint, hintI) => (
-                    <Box key={hintI}>
-                        {hint}
-                    </Box>
+                    <Stack key={hintI} alignItems='center' direction='row' spacing={1} justifyContent='center'>
+                        <Typography>{hint.isRight ? 'O' : 'X'}</Typography>
+                        <Typography>{hint.char}</Typography>
+                    </Stack>
                 ))}
             </Stack>
         </Grid>

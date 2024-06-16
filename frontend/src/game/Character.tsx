@@ -29,11 +29,11 @@ export default function Character(props: CharacterProps) {
     return (
         <Grid item xs={1}>
             <Button
-                variant={props.ch.isCorrect ? 'contained' : 'outlined'}
+                variant='outlined'
                 sx={buttonStyles}
                 onClick={event => handleClick(event, props.index)}
                 onContextMenu={event => handleClick(event, props.index)}
-                color={props.ch.isCorrect ? 'success' : 'primary'}
+                color='primary'
             >
                 {props.ch.char}
             </Button>

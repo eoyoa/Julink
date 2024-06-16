@@ -12,6 +12,7 @@ export default function Game() {
             container
             spacing={2}
             columns={6}
+            justifyContent='center'
         >
             {gameState.characters.map((ch, index) =>
                 <Character ch={ch} index={index} dispatch={dispatch} key={index}></Character>

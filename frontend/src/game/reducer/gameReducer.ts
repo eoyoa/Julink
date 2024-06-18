@@ -54,7 +54,7 @@ export function createInitialState(initialWord: string): GameState {
 // TODO: move to backend
 const correctWord = 'LETTER';
 
-export default function GameReducer(state: GameState, action: GameAction): GameState {
+export default function gameReducer(state: GameState, action: GameAction): GameState {
     switch (action.type) {
         case 'click': {
             const i = action.charIndex;

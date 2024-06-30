@@ -1,5 +1,5 @@
 import './App.css'
-import Game from "./game/Game.tsx";
+import Game from "./game_old/Game.tsx";
 import {createTheme, Stack, ThemeProvider, Typography} from "@mui/material";
 
 function App() {

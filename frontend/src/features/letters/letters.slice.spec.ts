@@ -10,6 +10,7 @@ describe.concurrent('letters slice tests', () => {
         canGenerateHints: [false, false, false, false, false, false]
     };
 
+    // TODO: consider breaking into test suites, haven't done yet just because i'm not sure how concurrent works
     it('should return the initial state', async () => {
         expect(lettersReducer(undefined, {type: 'unknown'})).toStrictEqual({
             letters: ["J", "U", "L", "I", "N", "K"],

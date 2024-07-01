@@ -1,16 +1,16 @@
-export function increment(letter: string) {
-    return increase(letter, 1);
+export function incrementLetter(letter: string) {
+    return increaseLetter(letter, 1);
 }
 
-export function decrement(letter: string) {
-    return decrease(letter, 1);
+export function decrementLetter(letter: string) {
+    return decreaseLetter(letter, 1);
 }
 
-function decrease(letter: string, amount: number) {
-    return increase(letter, -amount);
+function decreaseLetter(letter: string, amount: number) {
+    return increaseLetter(letter, -amount);
 }
 
-function increase(letter: string, amount: number) {
+function increaseLetter(letter: string, amount: number) {
     const currentCharCode = letter.charCodeAt(0);
 
     return String.fromCharCode(getResultingCharCode(currentCharCode + amount));

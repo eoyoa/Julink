@@ -1,11 +1,11 @@
-import reducer, {HintRow, HintType, push} from './hints.slice';
+import hintsReducer, {HintRow, HintType, push} from './hints.slice';
 
 describe.concurrent('hints slice tests', () => {
-    it('should return the initial state', () => {
-        expect(reducer(undefined, {type: 'unknown'})).toStrictEqual([]);
+    it('should return the initial state', async () => {
+        expect(hintsReducer(undefined, {type: 'unknown'})).toStrictEqual([]);
     });
 
-    it('should push new hint into state', () => {
+    it('should push new hint into state', async () => {
         const firstHint: HintRow = {
             hints: [
                 {type: HintType.MAYBE, char: 'A'},
@@ -23,7 +23,7 @@ describe.concurrent('hints slice tests', () => {
             ]
         };
 
-        expect(reducer(previousState, push(newHint))).toStrictEqual([
+        expect(hintsReducer(previousState, push(newHint))).toStrictEqual([
             firstHint, newHint
         ]);
     });

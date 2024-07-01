@@ -1,7 +1,7 @@
 import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
-import {decrement, increment} from "./letter-utils.ts";
+import {decrementLetter, incrementLetter} from "./letter-utils.ts";
 
-interface LettersState {
+export interface LettersState {
     letters: string[],
     canGenerateHints: boolean[]
 }
@@ -24,25 +24,27 @@ export const lettersSlice = createSlice({
     name: "letters",
     initialState,
     reducers: {
-        increment: (state, {payload: indices}: PayloadAction<number[]>) => {
-            for (const index of indices) {
-                change(state, index, increment);
-            }
+        increment: (state, {payload: index}: PayloadAction<number>) => {
+            change(state, index, incrementLetter);
         },
-        decrement: (state, {payload: indices}: PayloadAction<number[]>) => {
-            for (const index of indices) {
-                change(state, index, decrement);
-            }
+        decrement: (state, {payload: index}: PayloadAction<number>) => {
+            change(state, index, decrementLetter);
         },
         enableGeneration: (state, {payload: indices}: PayloadAction<number[]>) => {
             for (const index of indices) {
                 state.canGenerateHints[index] = true;
             }
         },
-        disableGeneration: (state, {payload: indices}: PayloadAction<number[]>) => {
-            for (const index of indices) {
-                state.canGenerateHints[index] = false;
-            }
+        disableGeneration: (state, {payload: index}: PayloadAction<number>) => {
+            state.canGenerateHints[index] = false;
         },
     }
 })
+
+export const {
+    increment,
+    decrement,
+    enableGeneration,
+    disableGeneration
+} = lettersSlice.actions;
+export default lettersSlice.reducer;

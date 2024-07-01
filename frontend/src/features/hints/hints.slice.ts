@@ -1,9 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type HintRow = {
-    hints: Hint[]
-}
-type Hint = {
+export type Hint = {
     type: HintType,
     char: string
 }
@@ -15,13 +12,13 @@ export enum HintType {
     UNKNOWN = '-'
 }
 
-const initialState: HintRow[] = [];
+const initialState: Hint[][] = [];
 
 export const hintsSlice = createSlice({
     name: "hints",
     initialState,
     reducers: {
-        push: (state, {payload}: PayloadAction<HintRow>) => {
+        push: (state, {payload}: PayloadAction<Hint[]>) => {
             state.push(payload);
         }
     }

@@ -1,9 +1,18 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import hintsReducer from "../features/hints/hints.slice";
+import lettersReducer from "../features/letters/letters.slice";
 
-export const store = configureStore({
-    reducer: {}
+const rootReducer = combineReducers({
+    hints: hintsReducer,
+    letters: lettersReducer
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppStore = ReturnType<typeof store.dispatch>;
-export type AppDispatch = typeof store.dispatch;
+export function setupStore() {
+    return configureStore({
+        reducer: rootReducer
+    });
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore["dispatch"];

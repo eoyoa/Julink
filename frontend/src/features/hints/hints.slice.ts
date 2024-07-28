@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type Hint = LetterHint[];
 
-export type LetterHint = {
+export interface LetterHint {
     readonly type: HintType,
     readonly char: string
 }

@@ -12,7 +12,7 @@ export function HintStack() {
     </Stack>
 }
 
-type HintRowProps = {
+interface HintRowProps {
     readonly hint: Hint
 }
 
@@ -26,7 +26,7 @@ function HintRow({hint, ...rest}: HintRowProps & StackProps) {
     )
 }
 
-type HintUnitProps = {
+interface HintUnitProps {
     letterHint: LetterHint
 }
 

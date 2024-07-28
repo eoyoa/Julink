@@ -42,7 +42,7 @@ export function createInitialState(initialWord: string): GameState {
         characters: initialWord.split('').map(ch => {
             return {
                 char: ch,
-                currentHints: [],
+                hints: [],
                 canGenerateHints: true,
             }
         }),
@@ -137,7 +137,7 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
                 // TODO: don't use assignment
                 newCharStates[i] = {
                     ...currChar,
-                    currentHints: currChar.hints.concat({
+                    hints: currChar.hints.concat({
                         char: currChar.char,
                         type: HintType.RIGHT
                     })
@@ -147,7 +147,7 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
             // TODO: don't use assignment
             newCharStates[i] = {
                 ...currChar,
-                currentHints: currChar.hints.concat({
+                hints: currChar.hints.concat({
                     char: '-',
                     type: HintType.UNKNOWN
                 })
@@ -164,7 +164,7 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
                 // TODO: don't use assignment
                 newCharStates[i] = {
                     ...currChar,
-                    currentHints: currChar.hints.concat({
+                    hints: currChar.hints.concat({
                         char: currChar.char,
                         type: HintType.WRONG
                     })
@@ -175,7 +175,7 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
                 // TODO: don't use assignment
                 newCharStates[i] = {
                     ...currChar,
-                    currentHints: currChar.hints.concat({
+                    hints: currChar.hints.concat({
                         char: currChar.char,
                         type: HintType.MAYBE
                     })
@@ -185,7 +185,7 @@ function getClickedChars(charStates: CharacterState[], charIndex: number, clickB
             // TODO: don't use assignment
             newCharStates[i] = {
                 ...currChar,
-                currentHints: currChar.hints.concat({
+                hints: currChar.hints.concat({
                     char: '-',
                     type: HintType.UNKNOWN
                 })

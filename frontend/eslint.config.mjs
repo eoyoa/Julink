@@ -10,6 +10,6 @@ export default tsEslint.config(
   ...tsEslint.configs.stylistic,
   prettierConfig,
   {
-    ignores: ['**/dist/', '**/*_old*(.*)']
+    ignores: ['**/dist/**', '**/*_old*(.*)', '**/*_old/**']
   }
 )

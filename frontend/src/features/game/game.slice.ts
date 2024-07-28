@@ -1,18 +1,18 @@
 import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
 import {decrementLetter, incrementLetter} from "./letter-utils.ts";
 
-export interface LettersState {
-    letters: string[],
-    canGenerateHints: boolean[]
+export interface GameState {
+    readonly letters: string[],
+    readonly canGenerateHints: boolean[]
 }
 
 const initialWord = "JULINK";
-const initialState: LettersState = {
+export const initialGameState: GameState = {
     letters: initialWord.split(""),
     canGenerateHints: new Array<boolean>(initialWord.length).fill(true)
 }
 
-function change(state: Draft<LettersState>, index: number, changeFunction: (letter: string) => string) {
+function change(state: Draft<GameState>, index: number, changeFunction: (letter: string) => string) {
     state.letters[index] = changeFunction(state.letters[index]);
     if (index > 0)
         state.letters[index - 1] = changeFunction(state.letters[index - 1]);
@@ -20,9 +20,9 @@ function change(state: Draft<LettersState>, index: number, changeFunction: (lett
         state.letters[index + 1] = changeFunction(state.letters[index + 1]);
 }
 
-export const lettersSlice = createSlice({
+export const gameSlice = createSlice({
     name: "letters",
-    initialState,
+    initialState: initialGameState,
     reducers: {
         increment: (state, {payload: index}: PayloadAction<number>) => {
             change(state, index, incrementLetter);
@@ -46,5 +46,5 @@ export const {
     decrement,
     enableGeneration,
     disableGeneration
-} = lettersSlice.actions;
-export default lettersSlice.reducer;
+} = gameSlice.actions;
+export default gameSlice.reducer;

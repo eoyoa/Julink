@@ -1,8 +1,9 @@
 import {renderWithProviders} from "../../../testing/test-utils.tsx";
-import HintStack from "./HintStack.tsx";
+import {HintStack} from "./HintStack.tsx";
 import {Hint, HintType} from "./hints.slice.ts";
+import {expect} from "vitest";
 
-const testHintRow1: Hint[] = [
+const testHintRow1: Hint = [
     {type: HintType.WRONG, char: "A"},
     {type: HintType.MAYBE, char: "B"},
     {type: HintType.MAYBE, char: "C"},
@@ -10,7 +11,7 @@ const testHintRow1: Hint[] = [
     {type: HintType.UNKNOWN, char: "-"},
     {type: HintType.UNKNOWN, char: "-"},
 ]
-const testHintRow2: Hint[] = [
+const testHintRow2: Hint = [
     {type: HintType.UNKNOWN, char: "-"},
     {type: HintType.RIGHT, char: "D"},
     {type: HintType.RIGHT, char: "E"},
@@ -19,31 +20,57 @@ const testHintRow2: Hint[] = [
     {type: HintType.UNKNOWN, char: "-"},
 ]
 
-describe.concurrent('hint stack component tests', () => {
-    it('should render empty grid if no hints in store', () => {
-        renderWithProviders(<HintStack/>);
-    });
-    it('should render 1 hint row if 1 hint row is in store', () => {
-        const hintsWith1Row: Hint[][] = [testHintRow1];
+describe('hint stack component tests', () => {
+    it('should render empty grid if no hints in store', async () => {
+        const renderResult = renderWithProviders(<HintStack/>);
 
-        renderWithProviders(<HintStack/>, {
+        const hintStack = renderResult.getByLabelText('Hint stack');
+
+        expect(hintStack).toBeInTheDocument();
+        expect(hintStack).toBeEmptyDOMElement();
+    });
+    it('should render 1 hint row if 1 hint row is in store', async () => {
+        const hintsWith1Row: Hint[] = [testHintRow1];
+
+        const renderResult = renderWithProviders(<HintStack/>, {
             preloadedState: {
-                hints: hintsWith1Row
+                currentHints: hintsWith1Row
             }
         });
 
+        const hintStack = renderResult.getByLabelText('Hint stack');
 
+        expect(hintStack).not.toBeEmptyDOMElement();
+
+        const actualHintRow = renderResult.queryByLabelText('Hint 1');
+        expect(actualHintRow).toBeInTheDocument();
+
+        for (const letterHint of testHintRow1) {
+            expect(renderResult.getAllByLabelText(`${letterHint.type} ${letterHint.char}`)[0]).toBeInTheDocument();
+        }
     });
-    it('should render multiple hint rows if multiple hint rows are in store', () => {
-        const hintsWith2Rows: Hint[][] = [
+    it('should render multiple hint rows if multiple hint rows are in store', async () => {
+        const hintsWith2Rows: Hint[] = [
             testHintRow1,
             testHintRow2
         ];
 
-        renderWithProviders(<HintStack/>, {
+        const renderResult = renderWithProviders(<HintStack/>, {
             preloadedState: {
-                hints: hintsWith2Rows
+                currentHints: hintsWith2Rows
             }
         });
+
+        const firstHintRow = renderResult.queryByLabelText('Hint 1');
+        const secondHintRow = renderResult.queryByLabelText('Hint 2');
+        expect(firstHintRow).toBeInTheDocument();
+        expect(secondHintRow).toBeInTheDocument();
+
+        for (const letterHint of testHintRow1) {
+            expect(renderResult.getAllByLabelText(`${letterHint.type} ${letterHint.char}`)[0]).toBeInTheDocument();
+        }
+        for (const letterHint of testHintRow2) {
+            expect(renderResult.getAllByLabelText(`${letterHint.type} ${letterHint.char}`)[0]).toBeInTheDocument();
+        }
     });
 });

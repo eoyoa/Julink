@@ -1,8 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type Hint = {
-    type: HintType,
-    char: string
+export type Hint = LetterHint[];
+
+export type LetterHint = {
+    readonly type: HintType,
+    readonly char: string
 }
 
 export enum HintType {
@@ -12,13 +14,15 @@ export enum HintType {
     UNKNOWN = '-'
 }
 
-const initialState: Hint[][] = [];
+export type HintsState = Hint[];
+
+export const initialHintsState: HintsState = [];
 
 export const hintsSlice = createSlice({
     name: "hints",
-    initialState,
+    initialState: initialHintsState,
     reducers: {
-        push: (state, {payload}: PayloadAction<Hint[]>) => {
+        push: (state, {payload}: PayloadAction<LetterHint[]>) => {
             state.push(payload);
         }
     }

@@ -1,15 +1,16 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import hintsReducer from "../features/hints/hints.slice";
-import lettersReducer from "../features/letters/letters.slice";
+import gameReducer from "../features/game/game.slice.ts";
 
 const rootReducer = combineReducers({
-    hints: hintsReducer,
-    letters: lettersReducer
+    currentHints: hintsReducer,
+    game: gameReducer
 });
 
-export function setupStore() {
+export function setupStore(preloadedState?: Partial<RootState>) {
     return configureStore({
-        reducer: rootReducer
+        reducer: rootReducer,
+        preloadedState
     });
 }
 

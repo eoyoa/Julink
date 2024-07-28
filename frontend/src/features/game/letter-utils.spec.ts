@@ -1,6 +1,6 @@
 import {decrementLetter, incrementLetter} from "./letter-utils.ts";
 
-describe.concurrent('incrementLetter function tests', () => {
+describe('incrementLetter function tests', () => {
     // TODO: wait for vitest v2 for passing expect from test context (test.for)
     it.each([
         ['A', 'B'],
@@ -15,7 +15,7 @@ describe.concurrent('incrementLetter function tests', () => {
     });
 });
 
-describe.concurrent('decrementLetter function tests', () => {
+describe('decrementLetter function tests', () => {
     it.each([
         ['B', 'A'],
         ['C', 'B'],

@@ -1,5 +1,5 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { decrementLetter, incrementLetter } from './letter-utils.ts';
+import { decrementLetter, incrementLetter } from './letter/letter-utils.ts';
 
 export interface GameState {
     readonly letters: string[];

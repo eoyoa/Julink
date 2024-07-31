@@ -1,8 +1,6 @@
 import { Button, useMediaQuery } from '@mui/material';
-import { useIndexContext } from '../IndexProvider.tsx';
-import { useAppDispatch } from '../../../../common/hooks.ts';
-import { useCallback } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;
@@ -15,13 +13,7 @@ export function ChangeLetterButton({
     symbol,
     action,
 }: ChangeLetterButtonProps) {
-    const { index } = useIndexContext();
-    const dispatch = useAppDispatch();
-
-    const handleChange = useCallback(() => {
-        dispatch(action(index));
-        // TODO: check against backend for right or wrong
-    }, []);
+    const handleChange = useHandleChangeCallback(action);
 
     const userHasMouse = useMediaQuery('(pointer:fine)');
     // const showControls = false;

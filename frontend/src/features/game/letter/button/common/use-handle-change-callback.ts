@@ -1,5 +1,5 @@
-import { useIndexContext } from '../IndexProvider.tsx';
-import { useAppDispatch } from '../../../../common/hooks.ts';
+import { useIndexContext } from '../../IndexProvider.tsx';
+import { useAppDispatch } from '../../../../../common/hooks.ts';
 import { useCallback } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 

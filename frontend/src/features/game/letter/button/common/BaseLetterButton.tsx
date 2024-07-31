@@ -1,8 +1,8 @@
 import { Button, useTheme } from '@mui/material';
-import { useIndexContext } from '../IndexProvider.tsx';
-import { useAppSelector } from '../../../../common/hooks.ts';
+import { useIndexContext } from '../../IndexProvider.tsx';
+import { useAppSelector } from '../../../../../common/hooks.ts';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
-import { decrement, increment } from '../../game.slice.ts';
+import { decrement, increment } from '../../../game.slice.ts';
 import { MouseEvent, useCallback } from 'react';
 
 export function BaseLetterButton() {

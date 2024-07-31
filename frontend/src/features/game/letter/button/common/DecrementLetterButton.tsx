@@ -1,5 +1,5 @@
 import { ChangeLetterButton } from './ChangeLetterButton.tsx';
-import { decrement } from '../../game.slice.ts';
+import { decrement } from '../../../game.slice.ts';
 
 interface DecrementLetterButtonProps {
     readonly hovering: boolean;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Stack } from '@mui/material';
-import { IncrementLetterButton } from './IncrementLetterButton.tsx';
-import { DecrementLetterButton } from './DecrementLetterButton.tsx';
-import { BaseLetterButton } from './BaseLetterButton.tsx';
+import { IncrementLetterButton } from './common/IncrementLetterButton.tsx';
+import { DecrementLetterButton } from './common/DecrementLetterButton.tsx';
+import { BaseLetterButton } from './common/BaseLetterButton.tsx';
 
 export function LetterButton() {
     const [hovering, setHovering] = useState(false);

@@ -1,10 +1,17 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 import { decrementLetter, incrementLetter } from './letter/letter-utils.ts';
 
+export enum GameStatus {
+    IN_PROGRESS,
+    WON,
+    LOST,
+}
+
 export interface GameState {
-    readonly letters: string[];
-    readonly canGenerateHints: boolean[];
-    readonly clicks: number;
+    letters: string[];
+    canGenerateHints: boolean[];
+    clicks: number;
+    status: GameStatus;
 }
 
 const initialWord = 'JULINK';
@@ -12,6 +19,7 @@ export const initialGameState: GameState = {
     letters: initialWord.split(''),
     canGenerateHints: new Array<boolean>(initialWord.length).fill(true),
     clicks: 0,
+    status: GameStatus.IN_PROGRESS,
 };
 
 function change(
@@ -51,6 +59,12 @@ export const gameSlice = createSlice({
             { payload: index }: PayloadAction<number>
         ) => {
             state.canGenerateHints[index] = false;
+        },
+        setStatus: (
+            state,
+            { payload: newStatus }: PayloadAction<GameStatus>
+        ) => {
+            state.status = newStatus;
         },
     },
 });

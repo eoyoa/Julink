@@ -1,9 +1,10 @@
-import { Button, useTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import { useIndexContext } from '../../IndexProvider.tsx';
 import { useAppSelector } from '../../../../../common/hooks.ts';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 import { decrement, increment } from '../../../game.slice.ts';
 import { MouseEvent, useCallback } from 'react';
+import { usePaletteFromStatus } from './use-palette-from-status.ts';
 
 export function BaseLetterButton() {
     const { index } = useIndexContext();
@@ -19,7 +20,7 @@ export function BaseLetterButton() {
         []
     );
 
-    const theme = useTheme();
+    const palette = usePaletteFromStatus();
 
     return (
         <Button
@@ -31,8 +32,8 @@ export function BaseLetterButton() {
                 width: '1.25rem',
                 height: '2.5rem',
                 '&:disabled': {
-                    background: theme.palette.success.main,
-                    color: theme.palette.success.contrastText,
+                    background: palette.main,
+                    color: palette.contrastText,
                 },
             }}
         >

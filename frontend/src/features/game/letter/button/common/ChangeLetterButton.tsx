@@ -1,6 +1,7 @@
 import { Button, useMediaQuery } from '@mui/material';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
+import { usePaletteFromStatus } from './use-palette-from-status.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;
@@ -21,11 +22,16 @@ export function ChangeLetterButton({
     const showButton = !userHasMouse || hovering; /* || showControls */
     const disableButton = userHasMouse && !hovering;
 
+    const palette = usePaletteFromStatus();
+
     return (
         <Button
             disabled={disableButton}
             onClick={handleChange}
             sx={{
+                '&:disabled': {
+                    color: palette.main,
+                },
                 minWidth: 0,
                 width: '1.25rem',
                 height: '1.25rem',

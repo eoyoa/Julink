@@ -23,23 +23,22 @@
     "noFallthroughCasesInSwitch": true,
     /* Paths */
     "paths": {
-      "@src/*": [
+      "@/*": [
         "./src/*"
-      ],
-      "@features/*": [
-        "./src/features/*"
       ]
     }
   },
-  "include": [
-    "src"
-  ],
+  "include": [],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.node.json"
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { ChangeLetterButton } from './ChangeLetterButton.tsx';
-import { decrement } from '../../../game.slice.ts';
+import { decrementLetter } from '@/features/game/letter/letter-utils.ts';
 
 interface DecrementLetterButtonProps {
     readonly hovering: boolean;
@@ -12,7 +12,7 @@ export function DecrementLetterButton({
         <ChangeLetterButton
             hovering={hovering}
             symbol={'-'}
-            action={decrement}
+            changeFunction={decrementLetter}
         />
     );
 }

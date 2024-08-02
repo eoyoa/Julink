@@ -1,10 +1,14 @@
 import { Button } from '@mui/material';
 import { useIndexContext } from '../../IndexProvider.tsx';
-import { useAppSelector } from '../../../../../common/hooks.ts';
+import { useAppSelector } from '@/common/hooks.ts';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
-import { decrement, GameStatus, increment } from '../../../game.slice.ts';
+import { GameStatus } from '../../../game.slice.ts';
 import { MouseEvent, useCallback } from 'react';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
+import {
+    decrementLetter,
+    incrementLetter,
+} from '@/features/game/letter/letter-utils.ts';
 
 export function BaseLetterButton() {
     const { index } = useIndexContext();
@@ -13,14 +17,14 @@ export function BaseLetterButton() {
         (state) => state.game.status === GameStatus.LOADING
     );
 
-    const handleIncrement = useHandleChangeCallback(increment);
-    const handleDecrement = useHandleChangeCallback(decrement);
+    const handleIncrement = useHandleChangeCallback(incrementLetter);
+    const handleDecrement = useHandleChangeCallback(decrementLetter);
     const handleOnContextMenu = useCallback(
         (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             handleDecrement();
         },
-        []
+        [handleDecrement]
     );
 
     const palette = usePaletteFromStatus();
@@ -30,7 +34,7 @@ export function BaseLetterButton() {
             variant={'outlined'}
             onClick={handleIncrement}
             onContextMenu={handleOnContextMenu}
-            disabled={true}
+            disabled={loading}
             sx={{
                 minWidth: 0,
                 width: '1.25rem',

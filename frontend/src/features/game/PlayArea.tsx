@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { LetterInfo } from './letter/LetterInfo.tsx';
-import { useAppSelector } from '../../common/hooks.ts';
+import { useAppSelector } from '@/common/hooks.ts';
 
 export function PlayArea() {
     const letters = useAppSelector((state) => state.game.letters);

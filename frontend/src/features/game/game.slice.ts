@@ -1,5 +1,5 @@
-import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { decrementLetter, incrementLetter } from './letter/letter-utils.ts';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IndexLetterPair } from './letter/button/common/use-handle-change-callback.ts';
 
 export enum GameStatus {
     IN_PROGRESS,
@@ -23,29 +23,18 @@ export const initialGameState: GameState = {
     status: GameStatus.IN_PROGRESS,
 };
 
-function change(
-    state: Draft<GameState>,
-    index: number,
-    changeFunction: (letter: string) => string
-) {
-    state.letters[index] = changeFunction(state.letters[index]);
-    if (index > 0)
-        state.letters[index - 1] = changeFunction(state.letters[index - 1]);
-    if (index < state.letters.length - 1)
-        state.letters[index + 1] = changeFunction(state.letters[index + 1]);
-
-    state.clicks++;
-}
-
 export const gameSlice = createSlice({
     name: 'letters',
     initialState: initialGameState,
     reducers: {
-        increment: (state, { payload: index }: PayloadAction<number>) => {
-            change(state, index, incrementLetter);
-        },
-        decrement: (state, { payload: index }: PayloadAction<number>) => {
-            change(state, index, decrementLetter);
+        setLetters: (
+            state,
+            { payload: pairs }: PayloadAction<IndexLetterPair[]>
+        ) => {
+            for (const pair of pairs) {
+                state.letters[pair.index] = pair.letter;
+            }
+            state.clicks++;
         },
         enableGeneration: (
             state,
@@ -70,11 +59,6 @@ export const gameSlice = createSlice({
     },
 });
 
-export const {
-    increment,
-    decrement,
-    enableGeneration,
-    disableGeneration,
-    setStatus,
-} = gameSlice.actions;
+export const { setLetters, enableGeneration, disableGeneration, setStatus } =
+    gameSlice.actions;
 export default gameSlice.reducer;

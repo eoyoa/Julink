@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../common/hooks.ts';
+import { useAppSelector } from '@/common/hooks.ts';
 import { Typography } from '@mui/material';
 
 export function ClicksCounter() {

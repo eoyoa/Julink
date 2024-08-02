@@ -1,6 +1,6 @@
 import { PaletteColor, useTheme } from '@mui/material';
 import { GameStatus } from '../../../game.slice.ts';
-import { useAppSelector } from '../../../../../common/hooks.ts';
+import { useAppSelector } from '@/common/hooks.ts';
 import { useMemo } from 'react';
 import { grey } from '@mui/material/colors';
 
@@ -10,7 +10,7 @@ export function usePaletteFromStatus() {
 
     const inProgressPalette = useMemo<PaletteColor>(
         () => ({ ...theme.palette.primary, main: grey['800'] }),
-        []
+        [theme.palette.primary]
     );
 
     switch (status) {

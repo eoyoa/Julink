@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type Hint = LetterHint[];
 
 export interface LetterHint {
+    readonly index: number;
     readonly type: HintType;
-    readonly char: string;
+    readonly letter: string;
 }
 
 export enum HintType {

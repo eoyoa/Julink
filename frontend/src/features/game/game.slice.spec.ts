@@ -1,9 +1,7 @@
 import gameReducer, {
-    decrement,
     disableGeneration,
     enableGeneration,
     GameState,
-    increment,
     initialGameState,
 } from './game.slice.ts';
 
@@ -22,26 +20,7 @@ describe.concurrent('game slice tests', () => {
             clicks: 0,
         });
     });
-    it('should increment 2 letters at passed indices', async () => {
-        expect(gameReducer(testState, increment(0))).toMatchObject({
-            letters: ['K', 'V', 'L', 'I', 'N', 'K'],
-        });
-    });
-    it('should increment 3 letters at passed indices', async () => {
-        expect(gameReducer(testState, increment(2))).toMatchObject({
-            letters: ['J', 'V', 'M', 'J', 'N', 'K'],
-        });
-    });
-    it('should decrement 2 letters at passed indices', async () => {
-        expect(gameReducer(testState, decrement(5))).toMatchObject({
-            letters: ['J', 'U', 'L', 'I', 'M', 'J'],
-        });
-    });
-    it('should decrement 3 letters at passed indices', async () => {
-        expect(gameReducer(testState, decrement(3))).toMatchObject({
-            letters: ['J', 'U', 'K', 'H', 'M', 'K'],
-        });
-    });
+
     it('should enable hint generation for 2 letters at passed indices', async () => {
         expect(
             gameReducer(enableTestState, enableGeneration([0, 1]))

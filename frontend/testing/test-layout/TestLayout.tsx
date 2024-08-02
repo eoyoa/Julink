@@ -7,11 +7,7 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import { useState } from 'react';
-import {
-    Hint,
-    HintType,
-    LetterHint,
-} from '../../src/features/hints/hints.slice.ts';
+import { LetterHint } from '@/features/hints/hints.slice.ts';
 
 const testingTheme = createTheme({
     typography: {
@@ -51,14 +47,6 @@ function TestClicksCounter() {
 
 function TestGameGrid() {
     const letters = 'JULINK'.split('');
-    const testHintRow: Hint = [
-        { type: HintType.UNKNOWN, char: '-' },
-        { type: HintType.RIGHT, char: 'D' },
-        { type: HintType.RIGHT, char: 'E' },
-        { type: HintType.RIGHT, char: 'F' },
-        { type: HintType.UNKNOWN, char: '-' },
-        { type: HintType.UNKNOWN, char: '-' },
-    ];
 
     return (
         <Stack
@@ -69,11 +57,7 @@ function TestGameGrid() {
             spacing={2}
         >
             {letters.map((letter, index) => (
-                <TestLetterStack
-                    key={index}
-                    letter={letter}
-                    hints={testHintRow}
-                />
+                <TestLetterStack key={index} letter={letter} hints={[]} />
             ))}
         </Stack>
     );
@@ -91,7 +75,7 @@ function TestLetterStack({ letter, hints }: TestLetterStackProps) {
             {hints.map((hint, index) => (
                 <Stack direction={'row'} key={index} spacing={1}>
                     <Typography>{hint.type}</Typography>
-                    <Typography>{hint.char}</Typography>
+                    <Typography>{hint.letter}</Typography>
                 </Stack>
             ))}
         </Stack>

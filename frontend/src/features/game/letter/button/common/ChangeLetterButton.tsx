@@ -1,26 +1,25 @@
 import { Button, useMediaQuery } from '@mui/material';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
-import { useAppSelector } from '../../../../../common/hooks.ts';
+import { useAppSelector } from '@/common/hooks.ts';
 import { GameStatus } from '../../../game.slice.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;
     readonly symbol: string;
-    readonly action: ActionCreatorWithPayload<number>;
+    readonly changeFunction: (letter: string) => string;
 }
 
 export function ChangeLetterButton({
     hovering,
     symbol,
-    action,
+    changeFunction,
 }: ChangeLetterButtonProps) {
     const loading = useAppSelector(
         (state) => state.game.status === GameStatus.LOADING
     );
 
-    const handleChange = useHandleChangeCallback(action);
+    const handleChange = useHandleChangeCallback(changeFunction);
 
     const userHasMouse = useMediaQuery('(pointer:fine)');
     // const showControls = false;

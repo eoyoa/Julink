@@ -1,5 +1,5 @@
 import { ChangeLetterButton } from './ChangeLetterButton.tsx';
-import { increment } from '../../../game.slice.ts';
+import { incrementLetter } from '@/features/game/letter/letter-utils.ts';
 
 interface IncrementLetterButtonProps {
     readonly hovering: boolean;
@@ -12,7 +12,7 @@ export function IncrementLetterButton({
         <ChangeLetterButton
             hovering={hovering}
             symbol={'+'}
-            action={increment}
+            changeFunction={incrementLetter}
         />
     );
 }

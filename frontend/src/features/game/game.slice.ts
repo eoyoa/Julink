@@ -3,6 +3,7 @@ import { decrementLetter, incrementLetter } from './letter/letter-utils.ts';
 
 export enum GameStatus {
     IN_PROGRESS,
+    LOADING,
     WON,
     LOST,
 }
@@ -69,6 +70,11 @@ export const gameSlice = createSlice({
     },
 });
 
-export const { increment, decrement, enableGeneration, disableGeneration } =
-    gameSlice.actions;
+export const {
+    increment,
+    decrement,
+    enableGeneration,
+    disableGeneration,
+    setStatus,
+} = gameSlice.actions;
 export default gameSlice.reducer;

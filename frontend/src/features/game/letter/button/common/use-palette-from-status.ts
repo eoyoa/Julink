@@ -14,11 +14,13 @@ export function usePaletteFromStatus() {
     );
 
     switch (status) {
-        case GameStatus.IN_PROGRESS:
+        case GameStatus.LOADING:
             return inProgressPalette;
         case GameStatus.WON:
             return theme.palette.success;
         case GameStatus.LOST:
             return theme.palette.error;
+        default:
+            return theme.palette.primary;
     }
 }

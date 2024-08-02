@@ -2,6 +2,8 @@ import { Button, useMediaQuery } from '@mui/material';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
+import { useAppSelector } from '../../../../../common/hooks.ts';
+import { GameStatus } from '../../../game.slice.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;
@@ -14,13 +16,17 @@ export function ChangeLetterButton({
     symbol,
     action,
 }: ChangeLetterButtonProps) {
+    const loading = useAppSelector(
+        (state) => state.game.status === GameStatus.LOADING
+    );
+
     const handleChange = useHandleChangeCallback(action);
 
     const userHasMouse = useMediaQuery('(pointer:fine)');
     // const showControls = false;
 
     const showButton = !userHasMouse || hovering; /* || showControls */
-    const disableButton = userHasMouse && !hovering;
+    const disableButton = loading || (userHasMouse && !hovering);
 
     const palette = usePaletteFromStatus();
 

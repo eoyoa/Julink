@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@import "https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap";
 
 :root, body, #root {
     height: 100%;
@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
     color-scheme: light dark;
 
     font-synthesis: none;

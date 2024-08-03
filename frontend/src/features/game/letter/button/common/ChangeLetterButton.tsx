@@ -19,22 +19,21 @@ export function ChangeLetterButton({
         (state) => state.game.status === GameStatus.LOADING
     );
     const won = useAppSelector((state) => state.game.status === GameStatus.WON);
-    const shouldDisable = loading;
 
     const handleChange = useHandleClickCallback(decrement);
 
     const userHasMouse = useMediaQuery('(pointer:fine)');
     // const showControls = false;
 
-    const showButton =
+    const shouldShow =
         !won && (!userHasMouse || hovering); /* || showControls */
-    const disableButton = shouldDisable || !showButton;
+    const shouldDisable = loading || !shouldShow;
 
     const palette = usePaletteFromStatus();
 
     return (
         <Button
-            disabled={disableButton}
+            disabled={shouldDisable}
             onClick={handleChange}
             sx={{
                 '&:disabled': {
@@ -44,8 +43,8 @@ export function ChangeLetterButton({
                 width: '1.25rem',
                 height: '1.25rem',
                 fontSize: '1.25rem',
-                opacity: showButton ? 1 : 0,
-                visibility: showButton ? 'visible' : 'hidden',
+                opacity: shouldShow ? 1 : 0,
+                visibility: shouldShow ? 'visible' : 'hidden',
                 transition: 'visibility 0.25s linear,opacity 0.25s linear',
             }}
         >

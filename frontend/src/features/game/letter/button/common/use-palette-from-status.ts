@@ -1,8 +1,8 @@
 import { PaletteColor, useTheme } from '@mui/material';
-import { GameStatus } from '../../../game.slice.ts';
 import { useAppSelector } from '@/common/hooks.ts';
 import { useMemo } from 'react';
 import { grey } from '@mui/material/colors';
+import { GameStatus } from '@/features/game/types.ts';
 
 export function usePaletteFromStatus() {
     const theme = useTheme();

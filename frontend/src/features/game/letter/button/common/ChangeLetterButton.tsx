@@ -2,7 +2,7 @@ import { Button, useMediaQuery } from '@mui/material';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
 import { useAppSelector } from '@/common/hooks.ts';
-import { GameStatus } from '../../../game.slice.ts';
+import { GameStatus } from '@/features/game/types.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;

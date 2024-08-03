@@ -3,11 +3,12 @@ import { useAppDispatch, useAppSelector } from '@/common/hooks.ts';
 import { useCallback } from 'react';
 import {
     disableGeneration,
-    GameStatus,
+    pushHints,
     setLetters,
     setStatus,
 } from '../../../game.slice.ts';
 import { getHints } from './fake-backend-action.ts';
+import { GameStatus } from '@/features/game/types.ts';
 
 export interface IndexLetterPair {
     readonly index: number;
@@ -47,19 +48,15 @@ export function useHandleChangeCallback(
     const pairs = useChangedLetters(index, changeFunction);
 
     return useCallback(() => {
-        console.debug('CLICKED');
         dispatch(setLetters(pairs));
-        console.debug('SET LETTERS', pairs);
         // TODO: check against backend for right or wrong
         dispatch(setStatus(GameStatus.LOADING));
-        console.debug('SET LOADING');
         const hints = getHints(pairs);
-        console.debug('GOT HINTS', hints);
         if (hints) {
             dispatch(disableGeneration(index));
             console.debug('ONE WAS RIGHT, RECEIVED HINTS', hints);
+            dispatch(pushHints(hints));
         }
         dispatch(setStatus(GameStatus.IN_PROGRESS));
-        console.debug('SET IN PROGRESS AGAIN');
     }, [dispatch, index, pairs]);
 }

@@ -1,9 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import hintsReducer from '../features/hints/hints.slice';
 import gameReducer from '../features/game/game.slice.ts';
 
 const rootReducer = combineReducers({
-    currentHints: hintsReducer,
     game: gameReducer,
 });
 

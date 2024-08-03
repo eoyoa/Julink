@@ -2,13 +2,13 @@ import { Button } from '@mui/material';
 import { useIndexContext } from '../../IndexProvider.tsx';
 import { useAppSelector } from '@/common/hooks.ts';
 import { useHandleChangeCallback } from './use-handle-change-callback.ts';
-import { GameStatus } from '../../../game.slice.ts';
 import { MouseEvent, useCallback } from 'react';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
 import {
     decrementLetter,
     incrementLetter,
 } from '@/features/game/letter/letter-utils.ts';
+import { GameStatus } from '@/features/game/types.ts';
 
 export function BaseLetterButton() {
     const { index } = useIndexContext();

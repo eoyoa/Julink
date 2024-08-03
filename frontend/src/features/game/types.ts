@@ -18,7 +18,17 @@ export interface UnknownLetterHint {
 
 export enum HintType {
     RIGHT = '✓',
-    WRONG = '✗',
+    WRONG = '✕',
     MAYBE = '?',
     UNKNOWN = '-',
+}
+
+export interface IndexLetterPair {
+    readonly index: number;
+    readonly letter: string;
+}
+
+export interface ClickAction {
+    readonly index: number;
+    readonly decrement?: boolean;
 }

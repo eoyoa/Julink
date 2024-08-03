@@ -1,5 +1,8 @@
-import { IndexLetterPair } from './use-handle-change-callback.ts';
-import { HintType, LetterHint } from '@/features/game/types.ts';
+import {
+    HintType,
+    IndexLetterPair,
+    LetterHint,
+} from '@/features/game/types.ts';
 
 const correctWord = 'LETTER';
 
@@ -19,8 +22,23 @@ export function convertToLetterHint(
     return copy;
 }
 
-export function getHints(pairs: IndexLetterPair[]): IndexedLetterHint[] | null {
-    if (pairs.every(isWrong)) return null;
+function validateWord(letters: string[]) {
+    return correctWord
+        .split('')
+        .every((correctLetter, index) => correctLetter === letters[index]);
+}
+
+function getHints(
+    indexClicked: number,
+    letters: string[]
+): IndexedLetterHint[] {
+    const pairs = letters
+        .map((letter, index) => ({ index, letter }) satisfies IndexLetterPair)
+        .filter(
+            (_, index) => index >= indexClicked - 1 && index <= indexClicked + 1
+        );
+
+    if (pairs.every(isWrong)) return [];
 
     if (pairs.every(isRight)) {
         return pairs.map((pair) => ({
@@ -36,4 +54,13 @@ export function getHints(pairs: IndexLetterPair[]): IndexedLetterHint[] | null {
         ...pair,
         type: pair === randomWrongPair ? HintType.WRONG : HintType.MAYBE,
     }));
+}
+
+export function runFakeBackendCall(
+    indexClicked: number,
+    letters: string[],
+    shouldGenerateHints: boolean
+) {
+    if (validateWord(letters)) return null;
+    return shouldGenerateHints ? getHints(indexClicked, letters) : [];
 }

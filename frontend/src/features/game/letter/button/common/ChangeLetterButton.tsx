@@ -1,31 +1,34 @@
 import { Button, useMediaQuery } from '@mui/material';
-import { useHandleChangeCallback } from './use-handle-change-callback.ts';
 import { usePaletteFromStatus } from './use-palette-from-status.ts';
 import { useAppSelector } from '@/common/hooks.ts';
 import { GameStatus } from '@/features/game/types.ts';
+import { useHandleClickCallback } from '@/features/game/letter/button/common/use-handle-click-callback.ts';
 
 interface ChangeLetterButtonProps {
     readonly hovering: boolean;
     readonly symbol: string;
-    readonly changeFunction: (letter: string) => string;
+    readonly decrement?: boolean;
 }
 
 export function ChangeLetterButton({
     hovering,
     symbol,
-    changeFunction,
+    decrement,
 }: ChangeLetterButtonProps) {
     const loading = useAppSelector(
         (state) => state.game.status === GameStatus.LOADING
     );
+    const won = useAppSelector((state) => state.game.status === GameStatus.WON);
+    const shouldDisable = loading;
 
-    const handleChange = useHandleChangeCallback(changeFunction);
+    const handleChange = useHandleClickCallback(decrement);
 
     const userHasMouse = useMediaQuery('(pointer:fine)');
     // const showControls = false;
 
-    const showButton = !userHasMouse || hovering; /* || showControls */
-    const disableButton = loading || (userHasMouse && !hovering);
+    const showButton =
+        !won && (!userHasMouse || hovering); /* || showControls */
+    const disableButton = shouldDisable || !showButton;
 
     const palette = usePaletteFromStatus();
 

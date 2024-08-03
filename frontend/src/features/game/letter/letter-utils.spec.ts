@@ -1,4 +1,4 @@
-import {decrementLetter, incrementLetter} from "./letter-utils.ts";
+import { decrementLetter, incrementLetter } from './letter-utils.ts';
 
 describe('incrementLetter function tests', () => {
     // TODO: wait for vitest v2 for passing expect from test context (test.for)

@@ -2,12 +2,8 @@ export function incrementLetter(letter: string) {
     return increaseLetter(letter, 1);
 }
 
-export function decrementLetter(letter: string) {
-    return decreaseLetter(letter, 1);
-}
-
-function decreaseLetter(letter: string, amount: number) {
-    return increaseLetter(letter, -amount);
+export function changeLetter(letter: string, decrement?: boolean) {
+    return increaseLetter(letter, decrement ? -1 : 1);
 }
 
 function increaseLetter(letter: string, amount: number) {
@@ -21,8 +17,10 @@ function getResultingCharCode(unwrappedCode: number): number {
     const properMod = (n: number, m: number) => ((n % m) + m) % m;
 
     const charCodeA = 'A'.charCodeAt(0);
-    const shiftedCharCode = (unwrappedCode) - charCodeA;
-    const codeInAlphabet = Math.abs(properMod(shiftedCharCode, ENGLISH_ALPHABET_LENGTH));
+    const shiftedCharCode = unwrappedCode - charCodeA;
+    const codeInAlphabet = Math.abs(
+        properMod(shiftedCharCode, ENGLISH_ALPHABET_LENGTH)
+    );
 
     return codeInAlphabet + charCodeA;
 }

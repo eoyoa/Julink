@@ -12,10 +12,10 @@ import {
     UnknownLetterHint,
 } from './types.ts';
 import {
+    checkLetters,
     convertToLetterHint,
     IndexedLetterHint,
-    runFakeBackendCall,
-} from '@/features/game/fake-backend.ts';
+} from '@/features/engine/engine.ts';
 import { changeLetter } from '@/features/game/letter/letter-utils.ts';
 import { AppDispatch, RootState } from '@/app/store.ts';
 
@@ -50,7 +50,7 @@ export const fetchHints = createAppAsyncThunk<
         thunkAPI.getState().game.canGenerateHints[index];
 
     // TODO: fake backend stuff should become not fake
-    const hints = runFakeBackendCall(index, letters, shouldGenerateHints);
+    const hints = checkLetters(index, letters, shouldGenerateHints);
     if (hints && hints.length > 0) thunkAPI.dispatch(disableGeneration(index));
     return hints;
 });

@@ -9,4 +9,5 @@ export default defineConfig({
         environment: 'jsdom',
         setupFiles: './testing/setup.ts',
     },
+    assetsInclude: ['**/*.txt'],
 });

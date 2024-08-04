@@ -9,7 +9,7 @@ const allWords = wordsString.split('\n');
 // TODO: only choose random preset word as a fallback, normally query backend
 const correctWord = allWords[Math.floor(Math.random() * allWords.length)];
 
-// TODO: pre-validate words.txt
+// TODO: pre-validate words.txt (de-dupe also)
 if (!isValid(correctWord)) {
     throw new Error(`Chosen word "${correctWord}" is not a valid word`);
 }
@@ -25,6 +25,7 @@ function isValid(word: string) {
             );
     }
 
+    // TODO: technically word can be longer if i wanted to, consider it for the future
     return word.length === 6 && isAlphabetic(word);
 }
 

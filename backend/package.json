@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "esbuild function.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+    "postbuild": "cd dist && zip -r index.zip index.js*"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.143",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.4"
+  }
+}

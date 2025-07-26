@@ -9,8 +9,8 @@
     "postbuild": "cd dist && zip -r index.zip index.js*"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.143",
-    "esbuild": "^0.23.0",
-    "typescript": "^5.5.4"
+    "@types/aws-lambda": "^8.10.152",
+    "esbuild": "^0.25.8",
+    "typescript": "catalog:"
   }
 }

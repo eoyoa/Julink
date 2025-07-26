@@ -1,4 +1,7 @@
 packages:
-  - 'frontend/**'
-  - 'backend/**'
+  - frontend/**
+  - backend/**
   - '!dist/**'
+
+catalog:
+  typescript: ^5.8.3

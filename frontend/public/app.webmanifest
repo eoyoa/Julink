@@ -1,6 +1,6 @@
 {
-  "name": "Julink",
-  "icons": [],
-  "start_url": "/",
-  "display": "standalone"
+    "name": "Julink",
+    "icons": [],
+    "start_url": "/",
+    "display": "standalone"
 }

@@ -1,6 +1,8 @@
-@import "https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap";
+@import 'https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap';
 
-:root, body, #root {
+:root,
+body,
+#root {
     height: 100%;
     width: 100%;
     margin: 0;

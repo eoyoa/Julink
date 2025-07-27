@@ -3,10 +3,10 @@ import {
     IndexLetterPair,
     LetterHint,
 } from '@/features/game/types.ts';
-import wordsString from './words.txt?raw';
+import defaultWords from './words_default.txt?raw';
 
 // TODO: de-dupe all words
-const allWords = wordsString.split('\n').filter((word) => isValid(word));
+const allWords = defaultWords.split('\n').filter((word) => isValid(word));
 console.debug(`added ${allWords.length} words!`);
 // TODO: only choose random preset word as a fallback, normally query backend
 const correctWord = allWords[Math.floor(Math.random() * allWords.length)];

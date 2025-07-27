@@ -5,11 +5,12 @@
   "private": true,
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "esbuild function.ts --bundle --minify --format=esm --platform=node --target=es2020 --outfile=dist/index.mjs",
-    "postbuild": "cd dist && zip -j index.zip index.mjs*"
+    "build": "node esbuild.config.mjs",
+    "postbuild": "cd dist && zip -j backend.zip index.mjs*"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.152",
+    "@types/node": "^24.1.0",
     "esbuild": "^0.25.8",
     "typescript": "catalog:"
   }

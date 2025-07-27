@@ -2,6 +2,8 @@
   "scripts": {
     "frontend:build": "pnpm --filter=frontend build",
     "frontend:dev": "pnpm --filter=frontend dev",
+    "backend:build": "pnpm --filter=backend build",
+    "infra:setup":  "pnpm backend:build && zip -j infra/backend.zip backend/dist/index.mjs*",
     "build": "pnpm frontend:build",
     "dev": "pnpm frontend:dev"
   }

@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "esbuild function.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
-    "postbuild": "cd dist && zip -r index.zip index.js*"
+    "build": "esbuild function.ts --bundle --minify --format=esm --platform=node --target=es2020 --outfile=dist/index.mjs",
+    "postbuild": "cd dist && zip -j index.zip index.mjs*"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.152",

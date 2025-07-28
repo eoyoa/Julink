@@ -6,6 +6,7 @@ import { Header } from './Header.tsx';
 import { Game } from '../features/game/Game.tsx';
 import { Provider } from 'react-redux';
 import { setupStore } from './store.ts';
+import { Rules } from '@/app/Rules.tsx';
 
 function throwNoRoot(): never {
     throw new ReferenceError('Root element was not found in index.html!');
@@ -29,6 +30,7 @@ createRoot(document.getElementById('root') ?? throwNoRoot()).render(
                 >
                     <Header />
                     <Game />
+                    <Rules />
                 </Stack>
             </ThemeProvider>
         </Provider>

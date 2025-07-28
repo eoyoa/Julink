@@ -3,7 +3,9 @@ version: "2"
 stack_defaults:
   runner_image: ghcr.io/eoyoa/julink-runner:latest
   terraform_workflow_tool: OPEN_TOFU
+  project_root: infra
   before_init:
+    - cd ..
     - cd backend
     - pnpm i
     - cd ..

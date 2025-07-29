@@ -1,13 +1,6 @@
 import {APIGatewayEvent, APIGatewayProxyResultV2, Handler} from "aws-lambda";
 import {getWordOfTheDay} from "./get-word-of-the-day.js";
-import {BackendRequest} from "./request.js";
-
-function isProperBackendRequest(request: unknown): request is BackendRequest {
-    if (!request || typeof request !== 'object') return false;
-    if (!('timestamp' in request)) return false;
-
-    return typeof request.timestamp === 'number';
-}
+import {BackendPayload, isProperBackendRequest} from "./api_types.js";
 
 export const handler: Handler = async ({ body }: APIGatewayEvent): Promise<APIGatewayProxyResultV2> => {
     if (!body) throw new Error("Missing request body");
@@ -16,7 +9,7 @@ export const handler: Handler = async ({ body }: APIGatewayEvent): Promise<APIGa
 
     const { timestamp } = request;
 
-    const payload = getWordOfTheDay();
+    const payload: BackendPayload = getWordOfTheDay();
 
     return {
         statusCode: 200,

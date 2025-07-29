@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "emit-declarations": "tsc --project ./tsconfig.decl.json",
     "prebuild": "rm -rf dist",
     "build": "node esbuild.config.mjs",
     "postbuild": "cd dist && zip -j backend.zip index.mjs*"

@@ -4,12 +4,37 @@ import {
     LetterHint,
 } from '@/features/game/types.ts';
 import defaultWords from './words_default.txt?raw';
+import { isBackendPayload } from '@backend/api_types';
 
-// TODO: de-dupe all words
-const allWords = defaultWords.split('\n').filter((word) => isValid(word));
-console.debug(`added ${allWords.length} words!`);
-// TODO: only choose random preset word as a fallback, normally query backend
-const correctWord = allWords[Math.floor(Math.random() * allWords.length)];
+// TODO: this top level await blocks the webpage from loading, consider a better way to do this
+const correctWord: string = await fetch(import.meta.env.VITE_API_URL, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        timestamp: Date.now(),
+    }),
+})
+    .then(async (res) => {
+        const response: unknown = await res.json();
+        if (!isBackendPayload(response))
+            throw new Error(`invalid payload: ${response}`);
+        console.debug('successfully retrieved word from backend!');
+        return response.word;
+    })
+    .catch((reason) => {
+        // TODO: de-dupe all words
+        console.error(
+            'failed to fetch word of the day, falling back to default words list',
+            reason
+        );
+        const allWords = defaultWords
+            .split('\n')
+            .filter((word) => isValid(word));
+        console.debug(`added ${allWords.length} words!`);
+        return allWords[Math.floor(Math.random() * allWords.length)];
+    });
 
 function isValid(word: string) {
     function isAlphabetic(word: string) {

@@ -19,7 +19,8 @@
         "noFallthroughCasesInSwitch": true,
         /* Paths */
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "@backend/*": ["../backend/*"]
         }
     },
     "include": [],
@@ -33,6 +34,9 @@
         },
         {
             "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "../backend/tsconfig.json"
         }
     ]
 }

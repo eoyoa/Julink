@@ -10,27 +10,6 @@ provider "aws" {
   }
 }
 
-module "api_gateway" {
-  source = "terraform-aws-modules/apigateway-v2/aws"
-
-  name          = local.api_gw.name
-  description   = local.api_gw.description
-  protocol_type = local.api_gw.protocol_type
-
-  cors_configuration = local.api_gw.cors_configuration
-
-  create_domain_name = false
-
-  stage_access_log_settings = local.api_gw.stage_access_log_settings
-
-  routes = local.api_gw.routes
-
-  tags = {
-    Environment = "production"
-    Purpose     = "lambda-integration"
-  }
-}
-
 module "lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
@@ -54,4 +33,30 @@ module "lambda_function" {
   tags = {
     Name = local.lambda.name
   }
+}
+
+# TODO: just use a function URL, it doesn't have to be so complicated
+module "api_gateway" {
+  source = "terraform-aws-modules/apigateway-v2/aws"
+
+  name          = local.api_gw.name
+  description   = local.api_gw.description
+  protocol_type = local.api_gw.protocol_type
+
+  cors_configuration = local.api_gw.cors_configuration
+
+  create_domain_name = false
+
+  stage_access_log_settings = local.api_gw.stage_access_log_settings
+
+  routes = local.api_gw.routes
+
+  tags = {
+    Environment = "production"
+    Purpose     = "lambda-integration"
+  }
+}
+
+output "api_gw_url" {
+  value = module.api_gateway.api_endpoint
 }

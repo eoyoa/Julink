@@ -6,12 +6,16 @@ import {
 import defaultWords from './words_default.txt?raw';
 import { isBackendPayload } from '@backend/api_types';
 
+const apiKey = import.meta.env.VITE_API_KEY;
+if (!apiKey) {
+    console.error('API key not found?');
+}
 // TODO: this top level await blocks the webpage from loading, consider a better way to do this
 const correctWord: string = await fetch(import.meta.env.VITE_API_URL, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': import.meta.env.VITE_API_KEY,
+        'x-api-key': import.meta.env.VITE_API_KEY,
     },
     body: JSON.stringify({
         timestamp: Date.now(),

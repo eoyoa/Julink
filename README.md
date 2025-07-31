@@ -12,7 +12,7 @@ See [RULES.md](./RULES.md)
 
 ### Frontend
 
-- Typescript
+- TypeScript
 - React
 - Vite
 - Material UI
@@ -23,6 +23,17 @@ See [RULES.md](./RULES.md)
 - Testing Library
 - jsdom
 
+### Backend
+
+- TypeScript
+- esbuild
+
+### Infrastructure
+
+- AWS
+- OpenTofu
+- Spacelift
+
 ## To-do
 
 - [X] Make hard mode
@@ -30,5 +41,6 @@ See [RULES.md](./RULES.md)
   - [ ] Add guess text field to normal mode
   - [X] Add Monty Hall problem-like hints
 - [ ] Add serverless function for validation and hints
+  - *Partially done.*
   - [ ] Make random daily words
 - [ ] Add testing

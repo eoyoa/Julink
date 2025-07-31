@@ -3,11 +3,13 @@ locals {
   environment_short = {
     development = "dev",
     production  = "prod",
-  }[var.environment]
+  }[var.env]
+
+  resource_prefix = "${var.project_name}-${local.environment_short}"
 
   # lambda settings
   lambda = {
-    name = "${var.project_name}-${local.environment_short}-lambda"
+    name = "${local.resource_prefix}-lambda"
     handler = "index.handler"
     runtime = "nodejs22.x"
     archive_path = "${path.module}/backend.zip"
@@ -15,41 +17,24 @@ locals {
 
   # api gw settings
   api_gw = {
-    name = "${var.project_name}-${local.environment_short}-api_gw"
-    description = "The HTTP API for the Julink lambda"
-    protocol_type = "HTTP"
+    name = "${local.resource_prefix}-api_gw"
+  }
 
-    cors_configuration = {
-      allow_headers = ["content-type"]
-      allow_methods = ["POST"]
-      allow_origins = var.environment == "development" ? [
-        "https://julink.juliank.im",
-        "http://localhost:5173"
-      ] : ["https://julink.juliank.im"]
-    }
+  # api gw usage plan settings
+  api_gw_usage_plan = {
+    name = "${local.resource_prefix}-usage_plan"
 
-    stage_access_log_settings = {
-      create_log_group            = true
-      log_group_retention_in_days = 7
-      format = jsonencode({
-        requestId    = "$context.requestId"
-        requestTime  = "$context.requestTime"
-        status       = "$context.status"
-        error        = "$context.error.message"
-        integration  = {
-          error = "$context.integration.error"
-        }
-      })
-    }
+    limit = 1000000
+    period = "MONTH"
 
-    routes = {
-      "POST /" = {
-        integration = {
-          uri                    = module.lambda_function.lambda_function_arn
-          payload_format_version = "2.0"
-          timeout_milliseconds   = 30000
-        }
-      }
+    rate_limit = 20
+    burst_limit = 50
+  }
+
+  api_keys = {
+    julink-frontend-key = {
+      name = "julink-frontend-key"
+      enabled = true
     }
   }
 }

@@ -10,12 +10,12 @@ variable "project_name" {
   default = "julink"
 }
 
-variable "environment" {
+variable "env" {
   description = "The deployment environment (e.g., development, production, staging)."
   type        = string
   default     = "production"
   validation {
-    condition     = contains(["development", "production"], var.environment)
+    condition     = contains(["development", "production"], var.env)
     error_message = "The environment variable must be one of: development, production."
   }
 }

@@ -14,5 +14,8 @@ export const handler: Handler = async ({ body }: APIGatewayEvent): Promise<APIGa
     return {
         statusCode: 200,
         body: JSON.stringify(payload),
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        },
     }
 }

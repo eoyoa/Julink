@@ -14,5 +14,9 @@
     "@types/node": "^24.1.0",
     "esbuild": "^0.25.8",
     "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@types/seedrandom": "^3.0.8",
+    "seedrandom": "^3.0.5"
   }
 }

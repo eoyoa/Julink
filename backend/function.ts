@@ -8,8 +8,9 @@ export const handler: Handler = async ({ body }: APIGatewayEvent): Promise<APIGa
     if (!isProperBackendRequest(request)) throw new Error("Invalid request body");
 
     const { timestamp } = request;
+    const day = Math.floor(timestamp / (1000 * 60 * 60 * 24));
 
-    const payload: BackendPayload = getWordOfTheDay();
+    const payload: BackendPayload = getWordOfTheDay(day);
 
     return {
         statusCode: 200,

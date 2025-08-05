@@ -1,4 +1,5 @@
 import words from './words.txt'
+import seedrandom from "seedrandom";
 
 function isValid(word: string) {
     function isAlphabetic(word: string) {
@@ -14,9 +15,9 @@ function isValid(word: string) {
     return word.length === 6 && isAlphabetic(word);
 }
 
-export function getWordOfTheDay() {
+export function getWordOfTheDay(day: number) {
     const allWords = words.split('\n').filter((word) => isValid(word));
-    const word = allWords[Math.floor(Math.random() * allWords.length)];
+    const word = allWords[Math.floor(seedrandom(day.toString())() * allWords.length)];
 
     return {
         word

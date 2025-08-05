@@ -40,7 +40,7 @@ See [RULES.md](./RULES.md)
 - [ ] Make normal mode
   - [ ] Add guess text field to normal mode
   - [X] Add Monty Hall problem-like hints
-- [ ] Add serverless function for validation and hints
+- [ ] Add serverless function for validation
   - *Partially done.*
-  - [ ] Make random daily words
+  - [X] Make random daily words
 - [ ] Add testing
